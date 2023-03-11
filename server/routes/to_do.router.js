@@ -33,4 +33,26 @@ toDoRouter.post("/addTask", (req, res) => {
         });
 })
 
+// PUT route
+toDoRouter.put('/editTask/:id', (req, res) => {
+    console.log('Inside PUT router');
+    
+    const idToEdit = req.params.id;
+    const queryText = `
+        UPDATE "to_do" 
+        SET "isCompleted" = TRUE
+        WHERE "id" = $1;`;
+
+    pool.query(queryText, [idToEdit])
+        .then(result => {
+            console.log('Successfully changed isCompleted status for task', idToEdit);
+            res.sendStatus(200);
+        })
+        .catch(err => {
+            console.log("There was an error editing the isCompleted status for task", idToEdit, err);
+            res.sendStatus(500);
+        })
+});
+
+
 module.exports = toDoRouter;
