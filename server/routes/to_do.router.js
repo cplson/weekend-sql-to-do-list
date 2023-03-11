@@ -46,7 +46,7 @@ toDoRouter.put('/editTask/:id', (req, res) => {
     pool.query(queryText, [idToEdit])
         .then(result => {
             console.log('Successfully changed isCompleted status for task', idToEdit);
-            res.sendStatus(200);
+            res.send(201);
         })
         .catch(err => {
             console.log("There was an error editing the isCompleted status for task", idToEdit, err);
@@ -54,5 +54,21 @@ toDoRouter.put('/editTask/:id', (req, res) => {
         });
 });
 
+// DELETE route
+toDoRouter.delete('/deleteTask/:id', (req, res) => {
+    console.log('entered delete router');
+    //res.sendStatus(201);
+    const queryText = `
+        DELETE FROM "to_do"
+        WHERE ID = $1;`
 
+    pool.query(queryText, [req.params.id])
+        .then(result => {
+            console.log('Successfully deleted task');
+            res.sendStatus(201);
+        }).catch(err => {
+            console.log('There was an issue deleting task from database', err);
+            res.sendStatus(500);
+        })
+})
 module.exports = toDoRouter;
