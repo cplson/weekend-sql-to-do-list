@@ -51,7 +51,7 @@ toDoRouter.put('/editTask/:id', (req, res) => {
         .catch(err => {
             console.log("There was an error editing the isCompleted status for task", idToEdit, err);
             res.sendStatus(500);
-        })
+        });
 });
 
 

@@ -12,6 +12,9 @@ function onReady(){
 function setupHandlers(){
     // Listener to add a new task
     $('#submitBtn').on('click', postTask);
+
+    // Listener to edit the status of an existing task
+    $("#tableBody").on('click','.completedBtn', editTask);
 }
 
 function getTasks(){
@@ -46,6 +49,21 @@ function postTask(){
     })
 }
 
+function editTask(){
+    console.log('Inside editTask');
+    const idToEdit = $(this).parent().parent().data().id;
+    
+    // PUT ajax request 
+    //sending the id of the task thats complete
+    $.ajax({
+        method: 'PUT',
+        url: `/to_do/editTask/${idToEdit}`
+    }).then(response => {
+        console.log('PUT router responded that isCompleted edit was successful');
+        getTasks();
+    })
+}
+
 function renderTasks(taskList){
     // empty table contents for update
     $('#tableBody').empty();
@@ -53,14 +71,36 @@ function renderTasks(taskList){
     $('#taskInput').val('');
     // For every task:
     for(let task of taskList){
-        // Target the thead element by id to render tr element
-        $('#tableBody').append(`
-            <tr>
-                <td id="displayIsCompleted"></td>
-                <td id="displayTask">${task.task}</td>
-                <td><button class="completed">Completed</button></td>
-                <td><button class="delete">Delete</button></td>
+        // If this task is incomplete, render task with no style
+        if(task.isCompleted === false){
+            incompletedAppend(task);
+        }
+        // Else: change background of the task to green
+            // and change the style to line through text
+            // and remove the Completed button
+        else{
+            completedAppend(task);
+        }  
+    }
+}
+
+function completedAppend(thisTask){
+    $('#tableBody').append(`
+        <tr data-id=${thisTask.id}>
+            <td class="displayTask"
+                style="background-color: green; text-decoration: line-through;">${thisTask.task}</td>
+            <td><button class="completedBtn" hidden>Completed</button></td>
+            <td><button class="deleteBtn">Delete</button></td>
+        </tr>
+    `);
+}
+
+function incompletedAppend(thisTask){
+    $('#tableBody').append(`
+            <tr data-id=${thisTask.id}>
+                <td class="displayTask">${thisTask.task}</td>
+                <td><button class="completedBtn">Completed</button></td>
+                <td><button class="deleteBtn">Delete</button></td>
             </tr>
         `);
-    }
 }
