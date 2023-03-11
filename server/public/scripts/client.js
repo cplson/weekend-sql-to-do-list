@@ -15,6 +15,9 @@ function setupHandlers(){
 
     // Listener to edit the status of an existing task
     $("#tableBody").on('click','.completedBtn', editTask);
+
+    // Listener to delete a task
+    $('#tableBody').on('click', '.deleteBtn', deleteTask);
 }
 
 function getTasks(){
@@ -61,6 +64,22 @@ function editTask(){
     }).then(response => {
         console.log('PUT router responded that isCompleted edit was successful');
         getTasks();
+    })
+}
+
+function deleteTask(){
+    console.log('Inside editTask');
+    const idToDelete = $(this).parent().parent().data().id;
+
+    // ajax DELETE request
+    $.ajax({
+        method: 'DELETE',
+        url: `/to_do/deleteTask/${idToDelete}`
+    }).then(response => {
+        console.log('Successfully got 200 response from the router');
+        getTasks();
+    }).catch(err => {
+        console.log('There was an issue deleting task from the server', err);
     })
 }
 

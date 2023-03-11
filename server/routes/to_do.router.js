@@ -8,7 +8,7 @@ toDoRouter.get("/", (req, res) => {
     const queryText = `SELECT * FROM "to_do";`;
     pool.query(queryText)
         .then(response => {
-            console.log('got a response from the db');
+            console.log('got tasks from the db');
             res.send(response.rows);
         }).catch(err => {
             console.log('there was an error getting data from server');
@@ -46,7 +46,7 @@ toDoRouter.put('/editTask/:id', (req, res) => {
     pool.query(queryText, [idToEdit])
         .then(result => {
             console.log('Successfully changed isCompleted status for task', idToEdit);
-            res.send(201);
+            res.send(200);
         })
         .catch(err => {
             console.log("There was an error editing the isCompleted status for task", idToEdit, err);
@@ -65,7 +65,7 @@ toDoRouter.delete('/deleteTask/:id', (req, res) => {
     pool.query(queryText, [req.params.id])
         .then(result => {
             console.log('Successfully deleted task');
-            res.sendStatus(201);
+            res.sendStatus(200);
         }).catch(err => {
             console.log('There was an issue deleting task from database', err);
             res.sendStatus(500);
