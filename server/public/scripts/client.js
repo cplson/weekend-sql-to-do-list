@@ -3,8 +3,15 @@ $(document).ready(onReady);
 function onReady(){
     console.log('client and jquery loaded');
 
+    // set eventHandlers
+    setupHandlers();
+
     // Display current tasks
     getTasks();
+}
+function setupHandlers(){
+    // Listener to add a new task
+    $('#submitBtn').on('click', postTask);
 }
 
 function getTasks(){
@@ -20,7 +27,30 @@ function getTasks(){
     });
 }
 
+function postTask(){
+    console.log('inside postTasks');
+    const newTask = $('#taskInput').val();
+    // Ajax request to post new task
+    $.ajax({
+        method: 'POST',
+        url: '/to_do/addTask',
+        data: {
+            isCompleted: false,
+            task: newTask
+        }
+    }).then(response => {
+        console.log('Successfully posted task to database');
+        getTasks();
+    }).catch(err => {
+        console.log('There was an error posting the new task to the database', err);
+    })
+}
+
 function renderTasks(taskList){
+    // empty table contents for update
+    $('#tableBody').empty();
+    // empty new task textarea
+    $('#taskInput').val('');
     // For every task:
     for(let task of taskList){
         // Target the thead element by id to render tr element
