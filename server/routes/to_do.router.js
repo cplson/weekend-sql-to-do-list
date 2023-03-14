@@ -46,7 +46,7 @@ toDoRouter.put('/editTask/:id', (req, res) => {
     pool.query(queryText, [idToEdit])
         .then(result => {
             console.log('Successfully changed isCompleted status for task', idToEdit);
-            res.send(200);
+            res.sendStatus(200);
         })
         .catch(err => {
             console.log("There was an error editing the isCompleted status for task", idToEdit, err);

@@ -107,7 +107,7 @@ function completedAppend(thisTask){
     $('#tableBody').append(`
         <tr class="table-success" data-id=${thisTask.id}>
             <td class="displayTask completed"">${thisTask.task}</td>
-            <td><button class="completedBtn btn btn-primary" hidden>Completed</button></td>
+            <td><button class="completedBtn btn btn-primary" disabled>Completed</button></td>
             <td><button class="deleteBtn btn btn-danger">Delete</button></td>
         </tr>
     `);
