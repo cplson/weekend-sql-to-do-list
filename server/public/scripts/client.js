@@ -105,21 +105,20 @@ function renderTasks(taskList){
 
 function completedAppend(thisTask){
     $('#tableBody').append(`
-        <tr data-id=${thisTask.id}>
-            <td class="displayTask"
-                style="background-color: green; text-decoration: line-through;">${thisTask.task}</td>
-            <td><button class="completedBtn" hidden>Completed</button></td>
-            <td><button class="deleteBtn">Delete</button></td>
+        <tr class="table-success" data-id=${thisTask.id}>
+            <td class="displayTask completed"">${thisTask.task}</td>
+            <td><button class="completedBtn btn btn-primary" hidden>Completed</button></td>
+            <td><button class="deleteBtn btn btn-danger">Delete</button></td>
         </tr>
     `);
 }
 
 function incompletedAppend(thisTask){
     $('#tableBody').append(`
-            <tr data-id=${thisTask.id}>
+            <tr class="table-secondary" data-id=${thisTask.id}>
                 <td class="displayTask">${thisTask.task}</td>
-                <td><button class="completedBtn">Completed</button></td>
-                <td><button class="deleteBtn">Delete</button></td>
+                <td><button class="completedBtn btn btn-primary">Completed</button></td>
+                <td><button class="deleteBtn btn btn-danger">Delete</button></td>
             </tr>
         `);
 }

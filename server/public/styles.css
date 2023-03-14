@@ -1,0 +1,24 @@
+:root{
+    --dark: #071E22;
+    --yellow: #F3DE8A;
+}
+
+body{
+    background-color: var(--yellow);
+}
+
+header{
+    height: 100px;
+    text-align: center;
+
+}
+
+h1{
+    font-weight: bold;
+    padding: 20px;
+    color: var(--dark);
+}
+
+.completed{
+    text-decoration: line-through;
+}
