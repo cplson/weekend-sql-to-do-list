@@ -2,6 +2,9 @@
     --dark: #071E22;
     --yellow: #F3DE8A;
 }
+*{
+    font-family: 'Roboto Slab', serif;
+}
 
 body{
     background-color: var(--yellow);
@@ -13,8 +16,11 @@ header{
 
 }
 
+td, label{
+    font-size: 1.25em;
+}
 h1{
-    font-weight: bold;
+    font-weight: 700;
     padding: 20px;
     color: var(--dark);
 }
